@@ -1,6 +1,6 @@
 ## extension-androidtools
 
-![](https://img.shields.io/github/repo-size/MAJigsaw77/extension-androidtools) ![](https://badgen.net/github/open-issues/MAJigsaw77/extension-androidtools) ![](https://badgen.net/badge/license/MIT/green)
+![](https://img.shields.io/github/repo-size/LimeExtensions/extension-androidtools) ![](https://badgen.net/github/open-issues/LimeExtensions/extension-androidtools) ![](https://badgen.net/badge/license/MIT/green)
 
 A Haxe/[Lime](https://lime.openfl.org) extension that incorporates Java functions through [JNI](https://en.m.wikipedia.org/wiki/Java_Native_Interface).
 
@@ -12,7 +12,7 @@ haxelib install extension-androidtools
 ```
 Or through `Git`, if you want the latest updates
 ```bash
-haxelib git extension-androidtools https://github.com/MAJigsaw77/extension-androidtools.git
+haxelib git extension-androidtools https://github.com/LimeExtensions/extension-androidtools.git
 ```
 
 ## Licensing

@@ -18,19 +18,6 @@ import sys.io.Process;
 class Tools
 {
 	/**
-	 * Installs a package from a given path.
-	 *
-	 * @param path The path to the package file to install.
-	 * @return true if the installation was successful, false otherwise.
-	 */
-	public static function installPackage(path:String):Bool
-	{
-		final installPackageJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/Tools', 'installPackage', '(Ljava/lang/String;)Z');
-
-		return installPackageJNI != null && !installPackageJNI(path);
-	}
-
-	/**
 	 * Enables app security, restricting access to sensitive data.
 	 * This method may require specific permissions or system-level access.
 	 */
@@ -135,47 +122,6 @@ class Tools
 			'(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V');
 		if (showNotificationJNI != null)
 			showNotificationJNI(title, message, channelID, channelName, ID);
-	}
-
-	/**
-	 * Retrieves the dimensions of any screen cutouts (e.g., notch, camera hole).
-	 *
-	 * @return An array of `Rectangle` objects representing the cutout areas.
-	 */
-	public static function getCutoutDimensions():Array<Rectangle>
-	{
-		final getCutoutDimensionsJNI:Null<Dynamic> = JNICache.createStaticMethod('org/haxe/extension/Tools', 'getCutoutDimensions',
-			'()[Landroid/graphics/Rect;');
-
-		if (getCutoutDimensionsJNI != null)
-		{
-			final rectangles:Array<Rectangle> = [];
-
-			for (rectangle in cast(getCutoutDimensionsJNI(), Array<Dynamic>))
-			{
-				if (rectangle == null)
-					continue;
-
-				final topJNI:Null<JNIMemberField> = JNICache.createMemberField('android/graphics/Rect', 'top', 'I');
-				final leftJNI:Null<JNIMemberField> = JNICache.createMemberField('android/graphics/Rect', 'left', 'I');
-				final rightJNI:Null<JNIMemberField> = JNICache.createMemberField('android/graphics/Rect', 'right', 'I');
-				final bottomJNI:Null<JNIMemberField> = JNICache.createMemberField('android/graphics/Rect', 'bottom', 'I');
-
-				if (topJNI != null && leftJNI != null && rightJNI != null && bottomJNI != null)
-				{
-					final top:Int = topJNI.get(rectangle);
-					final left:Int = leftJNI.get(rectangle);
-					final right:Int = rightJNI.get(rectangle);
-					final bottom:Int = bottomJNI.get(rectangle);
-
-					rectangles.push(new Rectangle(left, top, right - left, bottom - top));
-				}
-			}
-
-			return rectangles;
-		}
-
-		return [];
 	}
 
 	/**

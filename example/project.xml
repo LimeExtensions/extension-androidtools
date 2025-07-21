@@ -4,9 +4,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/xsd/project-1.0.4.xsd">
 
-	<meta title="Extension-IAPCore Test" package="org.openfl.lime.samples.helloworld" version="1.0.0" company="OpenFL" />
+	<meta title="Extension-AndroidTools Test" package="org.openfl.lime.samples.helloworld" version="1.0.0" company="OpenFL" />
 
-	<app main="Main" path="export" file="EITest" />
+	<app main="Main" path="export" file="ATTest" />
 
 	<architecture name="arm64" exclude="armv7" if="android" />
 

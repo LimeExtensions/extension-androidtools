@@ -242,49 +242,6 @@ public class Tools extends Extension
 	}
 
 	/**
-	 * Installs an application package from the specified path.
-	 *
-	 * @param path The path to the application package (.apk file).
-	 * @return true if the installation was successful, false otherwise.
-	 */
-	public static boolean installPackage(final String path)
-	{
-		try
-		{
-			boolean retVal = true;
-
-			if (Build.VERSION.SDK_INT >= 26)
-				retVal = mainContext.getPackageManager().canRequestPackageInstalls();
-
-			final File file = new File(path);
-
-			if (file.exists())
-			{
-				Intent intent = new Intent(Intent.ACTION_VIEW);
-
-				if (Build.VERSION.SDK_INT >= 24)
-					intent.setDataAndType(FileProvider.getUriForFile(mainContext, packageName + ".provider", file), "application/vnd.android.package-archive");
-				else
-					intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-				mainContext.startActivity(intent);
-			}
-			else
-				Log.e(LOG_TAG, "Attempted to install an application package from " + file.getAbsolutePath() + " but the file doesn't exist.");
-
-			return retVal;
-		}
-		catch (Exception e)
-		{
-			Log.e(LOG_TAG, e.toString());
-
-			return false;
-		}
-	}
-
-	/**
 	 * Enables secure mode for the application window.
 	 */
 	public static void enableAppSecure()
@@ -430,6 +387,7 @@ public class Tools extends Extension
 	 * @param channelName The name of the notification channel.
 	 * @param ID The ID of the notification.
 	 */
+	@SuppressWarnings("deprecation")
 	public static void showNotification(final String title, final String message, final String channelID, final String channelName, final int ID)
 	{
 		mainActivity.runOnUiThread(new Runnable()
@@ -464,36 +422,6 @@ public class Tools extends Extension
 				}
 			}
 		});
-	}
-
-	/**
-	 * Retrieves the bounding rectangles for the display cutout (notch) if present.
-	 * Each rectangle represents an area of the display that is obstructed by the cutout.
-	 *
-	 * @return An array of Rect objects representing the bounding rectangles of the display cutout.
-	 *		 Returns an empty array if there is no cutout or if cutouts are not supported on the device.
-	 */
-	public static Rect[] getCutoutDimensions()
-	{
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-		{
-			WindowInsets insets = mainActivity.getWindow().getDecorView().getRootWindowInsets();
-
-			if (insets != null)
-			{
-				DisplayCutout cutout = insets.getDisplayCutout();
-
-				if (cutout != null)
-				{
-					List<Rect> boundingRects = cutout.getBoundingRects();
-
-					if (boundingRects != null && !boundingRects.isEmpty())
-						return boundingRects.toArray(new Rect[0]);
-				}
-			}
-		}
-
-		return new Rect[0];
 	}
 
 	/**
@@ -649,6 +577,7 @@ public class Tools extends Extension
 	 * @param durationHint The duration of the audio focus request (e.g., AudioManager.AUDIOFOCUS_GAIN).
 	 * @return The result of the audio focus request (e.g., AudioManager.AUDIOFOCUS_REQUEST_GRANTED or AUDIOFOCUS_REQUEST_FAILED).
 	 */
+	@SuppressWarnings("deprecation")
 	public static int requestAudioFocus(final HaxeObject haxeCallbackObject, final int streamType, final int durationHint)
 	{
 		try
@@ -681,6 +610,7 @@ public class Tools extends Extension
 	 * @param haxeCallbackObject The HaxeObject that was used to request audio focus.
 	 * @return The result of the abandon audio focus request (e.g., AudioManager.AUDIOFOCUS_REQUEST_GRANTED or AUDIOFOCUS_REQUEST_FAILED).
 	 */
+	@SuppressWarnings("deprecation")
 	public static int abandonAudioFocus(final HaxeObject haxeCallbackObject)
 	{
 		try
